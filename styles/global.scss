@@ -1,0 +1,112 @@
+// change the theme
+$theme-colors: (
+        "primary": #6366F1,
+        "secondary": #4B5563,
+        "dark": black
+);
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+:root {
+  --bs-body-bg: #111827;
+  --bs-body-color: white;
+  --bs-tertiary-bg-rgb: #111827;
+  --nav-link-color: white;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system,
+  BlinkMacSystemFont,
+  Segoe UI,
+  Roboto,
+  Oxygen,
+  Ubuntu,
+  Cantarell,
+  Fira Sans,
+  Droid Sans,
+  Helvetica Neue,
+  sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-body-tertiary{
+  background-color: #111827 !important;
+}
+.navbar {
+  .container {
+    gap: 22px;
+  }
+}
+
+.navbar-nav {
+  gap: 40px;
+}
+
+.nav-link {
+  color: var(--nav-link-color);
+  &.active{
+    color: #6366F1 !important;
+  }
+  .hover{
+    color: #6366F1;
+  }
+  &:active{
+    color: white;
+  }
+  &:visited{
+    color: white;
+  }
+}
+
+.left-section {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+
+  .badge-container {
+    gap: 16px;
+
+    .badge {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 0.025em;
+      text-align: left;
+
+      .bg-success {
+        font-weight: 400;
+      }
+    }
+  }
+
+  .heading {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 72px;
+    text-align: left;
+  }
+
+  .description {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+  }
+
+  button {
+    color: var(--nav-link-color);
+  }
+}
+
+@media (min-width: 1400px) {
+  .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 1280px;
+  }
+}
