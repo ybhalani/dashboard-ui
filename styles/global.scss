@@ -9,10 +9,13 @@ $theme-colors: (
 @import '~bootstrap/scss/bootstrap.scss';
 
 :root {
+  --primary-color: #6366F1;
   --bs-body-bg: #111827;
   --bs-body-color: white;
   --bs-tertiary-bg-rgb: #111827;
-  --nav-link-color: white;
+  --nav-link-color: var(--bs-white);
+  --nav-link-offcanvas-color: #374151;
+  --bs-offcanvas-bg: var(--bs-white)
 }
 
 html,
@@ -36,9 +39,10 @@ body {
   box-sizing: border-box;
 }
 
-.bg-body-tertiary{
+.bg-body-tertiary {
   background-color: #111827 !important;
 }
+
 .navbar {
   .container {
     gap: 22px;
@@ -51,17 +55,54 @@ body {
 
 .nav-link {
   color: var(--nav-link-color);
-  &.active{
+
+  &.active {
     color: #6366F1 !important;
   }
-  .hover{
+
+  .hover {
     color: #6366F1;
   }
-  &:active{
-    color: white;
+
+  &:active {
+    color: var(--bs-white);
   }
-  &:visited{
-    color: white;
+
+  &:visited {
+    color: var(--bs-white);
+  }
+}
+
+.offcanvas-header {
+  background-color: var(--bs-white);
+}
+
+.offcanvas-body {
+  background-color: var(--bs-white);
+  overflow-y: unset;
+
+  .nav-link {
+    color: var(--nav-link-offcanvas-color) !important;
+
+    &.active {
+      color: var(--nav-link-offcanvas-color) !important;
+    }
+
+    .hover {
+      color: #6366F1 !important;
+    }
+
+    &:active {
+      color: var(--nav-link-offcanvas-color)
+    }
+
+    &:visited {
+      color: var(--nav-link-offcanvas-color)
+    }
+  }
+
+  button {
+    color: var(--nav-link-color);
   }
 }
 
@@ -108,5 +149,17 @@ body {
 @media (min-width: 1400px) {
   .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
     max-width: 1280px;
+  }
+}
+
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) {
+  .navbar-nav {
+    gap: 4px;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .navbar-nav {
+    gap: 20px;
   }
 }

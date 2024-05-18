@@ -10,12 +10,12 @@ export default function RightSection() {
         <Col lg={7} className={'right-section d-flex flex-wrap justify-content-center align-items-center'}>
             <Image
                 src={Illustration}
-                alt="Right section background"
+                alt="Image for dashboard presentation"
+                aria-label="Image for dashboard presentation"
                 width={625.04}
                 height={624}
                 priority
             />
-
         </Col>
     )
 }
