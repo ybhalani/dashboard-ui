@@ -3,13 +3,12 @@
 import React from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Badge from 'react-bootstrap/Badge';
-import Form from 'react-bootstrap/Form';
+import { Col, Row, Button, Badge, Form } from 'react-bootstrap';
 
-export default function LeftSection() {
+interface LeftSectionProps {
+}
+
+const LeftSection: React.FC<LeftSectionProps> = () => {
     return (
         <Col className="left-section">
             <Badge bg="dark" className={'badge-container d-flex'} aria-label="Badge container">
@@ -30,16 +29,16 @@ export default function LeftSection() {
             <Form>
                 <Row>
                     <Col lg={8} xs={12}>
-                        <Form.Label htmlFor="inlineFormInput" visuallyHidden>
-                            Enter your email
-                        </Form.Label>
-                        <Form.Control
-                            className="mb-2"
-                            id="inlineFormInput"
-                            placeholder="Enter your email"
-                            style={{backgroundColor: 'white', color: 'inherit'}}
-                            aria-label="Enter your email"
-                        />
+                        <Form.Group controlId="inlineFormInput">
+                            <Form.Label visuallyHidden>Enter your email</Form.Label>
+                            <Form.Control
+                                className="mb-2"
+                                type="email"
+                                placeholder="Enter your email"
+                                style={{ backgroundColor: 'white', color: 'inherit' }}
+                                aria-label="Enter your email"
+                            />
+                        </Form.Group>
                     </Col>
                     <Col lg={4} xs={12}>
                         <div className="d-grid">
@@ -60,3 +59,5 @@ export default function LeftSection() {
         </Col>
     )
 }
+
+export default LeftSection;

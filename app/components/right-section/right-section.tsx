@@ -1,21 +1,41 @@
 'use client';
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Illustration from '../../../public/illustration.svg';
 import Image from "next/image";
 import Col from "react-bootstrap/Col";
 
-export default function RightSection() {
+interface RightSectionProps {
+    illustrationSrc: any; // Add a prop for the illustration source
+    altText: string; // Add a prop for the alt text
+    ariaLabel: string; // Add a prop for the aria label
+}
+
+const RightSection: React.FC<RightSectionProps> = ({ illustrationSrc, altText, ariaLabel }) => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const imageWidth = windowWidth > 768 ? 625.04 : windowWidth * 0.8; // Adjust the multiplier for desired width on smaller screens
+    const imageHeight = windowWidth > 768 ? 624 : imageWidth; // Maintain aspect ratio
+    const col = windowWidth > 768 && windowWidth < 1024  ? 7 : 6; // Maintain aspect ratio
+
     return (
-        <Col lg={7} className={'right-section d-flex flex-wrap justify-content-center align-items-center'}>
+        <Col lg={col} className={'right-section d-flex flex-wrap justify-content-center align-items-center'}>
             <Image
-                src={Illustration}
-                alt="Image for dashboard presentation"
-                aria-label="Image for dashboard presentation"
-                width={625.04}
-                height={624}
+                src={illustrationSrc}
+                alt={altText}
+                aria-label={ariaLabel}
+                width={imageWidth}
+                height={imageHeight}
                 priority
             />
         </Col>
     )
 }
+
+export default RightSection;

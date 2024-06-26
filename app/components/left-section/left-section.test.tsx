@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import LeftSection from "./left-seection";
+import LeftSection from "./left-section";
 
 describe("LeftSection", () => {
   it("renders without error", () => {
