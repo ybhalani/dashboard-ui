@@ -12,9 +12,12 @@ interface RightSectionProps {
 }
 
 const RightSection: React.FC<RightSectionProps> = ({ illustrationSrc, altText, ariaLabel }) => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [windowWidth, setWindowWidth] = useState(0); // Initialize with 0 or a default width
 
     useEffect(() => {
+        // Ensure window object is used only after component mounts
+        setWindowWidth(window.innerWidth);
+        
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
