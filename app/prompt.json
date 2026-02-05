@@ -1,0 +1,305 @@
+> (All repos are already open in the editor)
+
+---
+
+## CONTEXT & OBJECTIVE
+
+You are operating inside a GEICO enterprise web platform.
+
+The following repositories are open in this editor workspace:
+
+1. **www-nextjs**
+
+   * The primary, future-facing Next.js application
+   * Target platform for full geico.com redesign
+   * App Router + TypeScript (assume unless discovered otherwise)
+
+2. **legacy-www-php**
+
+   * Existing production PHP-based website
+   * Uses enterprise CMS (Wagtail)
+   * Pages are exported as JSON into Azure Blob Storage
+   * This repo is **READ-ONLY** and must never be modified
+   * Used only for reference, comparison, and migration guidance
+
+3. **design-system-dev**
+
+   * Official GEICO Design System
+   * Built using **Lit Web Components**
+   * Includes Storybook, usage examples, props, slots, events
+   * This repo is the **single source of truth for UI components**
+   * Components must NOT be rewritten or duplicated
+
+Your task is to **scan, understand, and define Cursor rules** that will:
+
+* Speed up development
+* Prevent architectural mistakes
+* Enforce enterprise standards
+* Support long-term migration from PHP → Next.js
+* Be safe for a billion+ traffic scale
+
+---
+
+## PRIMARY TASK
+
+### 1. Scan & Learn (Read-Only)
+
+Perform a **read-only scan** of:
+
+* `www-nextjs/README.md`
+* `www-nextjs/package.json`
+* `www-nextjs/app/**` (or pages/ if applicable)
+* Any existing config, middleware, or data-fetching patterns
+* Existing usage of CMS JSON, blob storage, routing, caching
+* Global settings files referenced in the codebase (find them yourself)
+
+Also:
+
+* Inspect **legacy-www-php** only to understand:
+
+  * Page behavior
+  * Caching approach (60s web-server cache)
+  * Page structure & rendering logic
+* Inspect **design-system-dev** to understand:
+
+  * How Lit Web Components are intended to be consumed
+  * SSR limitations
+  * Client-side hydration expectations
+
+Do **NOT** modify any application code during this phase.
+
+---
+
+### 2. Create `.cursorrules` in `www-nextjs`
+
+Generate a **production-ready `.cursorrules` file** at the root of `www-nextjs` that encodes ALL rules below.
+
+This file will be committed and shared with the entire team.
+
+---
+
+## ENTERPRISE ARCHITECTURAL RULES (MANDATORY)
+
+### A. Repository Boundaries
+
+* `www-nextjs` → primary working repo
+* `legacy-www-php` → READ-ONLY reference only
+* `design-system-dev` → READ-ONLY source of UI truth
+* Never suggest editing or copying code from other repos
+
+---
+
+### B. Next.js Architecture Rules
+
+* Prefer **Server Components by default**
+* Use **Client Components ONLY when required**
+
+  * Example: Lit Web Components (GDS / HUE)
+* Use **dynamic routing** for CMS-driven pages
+* Validate CMS JSON strictly at the page boundary
+* Never assume CMS data is valid
+
+---
+
+### C. CMS & Data Fetching Rules
+
+* CMS content is delivered as JSON from **Azure Blob Storage**
+* Pages are pre-generated as JSON (≈1500 pages)
+* JSON may contain:
+
+  * Structured data
+  * HTML strings
+  * Component mappings
+
+Rules:
+
+* Fetch CMS JSON at the **edge or server**
+* Use **caching equivalent or better** than legacy PHP:
+
+  * ISR, CDN caching, or edge caching
+* Avoid per-request blob fetches
+* Optimize for global scale
+
+---
+
+### D. Caching & Scalability (CRITICAL)
+
+Design for **1B+ users**.
+
+Rules:
+
+* Prefer CDN + ISR over origin hits
+* Avoid client-side fetching for core page content
+* Explicitly define cache lifetimes
+* Never introduce uncached CMS fetch loops
+
+---
+
+### E. Design System (Lit Web Components) Rules
+
+* GDS / HUE components:
+
+  * Are **Lit Web Components**
+  * Do NOT SSR reliably
+* Must be rendered **client-side only**
+* Must be:
+
+  * Dynamically imported
+  * Wrapped safely in React boundaries if needed
+* Do NOT reimplement components in React
+* Do NOT add custom styles that diverge from the design system
+
+---
+
+### F. Performance Budgets (NON-NEGOTIABLE)
+
+* Lighthouse targets:
+
+  * Performance ≥ 95
+  * Accessibility ≥ 95
+  * SEO ≥ 95
+* Mobile-first optimization required
+* Avoid new client-side JS unless justified
+* Optimize LCP, TTFB, CLS explicitly
+
+---
+
+### G. Accessibility Rules
+
+* WCAG 2.1 AA minimum
+* Semantic HTML required
+* ARIA only when necessary
+* Do not introduce inaccessible patterns
+
+---
+
+### H. Security & Compliance
+
+Treat all code as **security-sensitive**.
+
+Rules:
+
+* Do NOT log user data client-side
+* Do NOT modify authentication, cookies, headers
+* Flag security concerns instead of implementing risky changes
+* Assume PII sensitivity even on marketing pages
+
+---
+
+### I. Environment Rules
+
+* Local & DV:
+
+  * 3rd-party scripts MAY be disabled for Lighthouse testing
+* QA / Stage / Prod:
+
+  * Analytics & 3rd-party scripts MUST remain enabled
+* Any environment-specific behavior must be explicit and documented
+
+---
+
+### J. Non-Negotiable Tech Decisions
+
+* Do NOT introduce:
+
+  * New state management libraries
+  * New styling systems
+  * Alternative routing strategies
+* Respect existing framework and tooling decisions
+* No large refactors without explicit request
+
+---
+
+### K. Code Quality & Testing
+
+* TypeScript strictly enforced
+* Unit tests required for:
+
+  * Data validation
+  * Component rendering
+  * Error scenarios
+* Cover positive and negative cases
+* Tests must pass locally
+* Add comments where logic is non-obvious
+* Code must be readable for new joiners
+
+---
+
+### L. PR & Workflow Rules
+
+Follow GEICO PR standards:
+
+* Branch naming
+* Commit message format
+* PR title & description rules
+  (Use provided PR wiki documentation as source of truth)
+
+Cursor must:
+
+* Align changes with these standards
+* Never auto-generate commits
+* Never assume merge behavior
+
+---
+
+## CURSOR BEHAVIOR RULES (VERY IMPORTANT)
+
+* NEVER scan the entire repo unless explicitly asked
+* Always work incrementally
+* If context is large:
+
+  * Ask before proceeding
+* If unsure:
+
+  * Ask clarifying questions
+* Prefer explanation before implementation
+* Avoid speculative or “creative” architecture
+
+---
+
+## DELIVERABLES
+
+1. `.cursorrules` file in `www-nextjs`
+2. Clear comments explaining WHY rules exist
+3. No application code changes unless explicitly requested
+
+---
+
+## SUCCESS CRITERIA
+
+* Rules are safe for enterprise scale
+* Rules prevent Cursor from getting stuck or over-scanning
+* Rules guide consistent, high-quality Next.js development
+* Rules are understandable by the whole team
+* Rules support long-term PHP → Next.js migration
+
+---
+
+### IMPORTANT
+
+Do NOT start coding.
+Your ONLY output is the finalized `.cursorrules`.
+
+---
+
+## END OF PROMPT
+
+---
+
+### 🧠 Final Staff-Level Advice (off the record)
+
+Once this is committed:
+
+* Train the team to:
+
+  * Scope prompts
+  * Work page-by-page
+  * Never ask Cursor to “analyze everything”
+* This setup will **eliminate 80% of AI frustration** instantly.
+
+If you want next:
+
+* I can help you **review the generated `.cursorrules`**
+* Or create **team prompt templates** (migration, new page, bug fix, perf audit)
+
+You’re doing this the *right* way.
