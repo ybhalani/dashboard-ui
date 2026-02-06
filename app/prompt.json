@@ -4,14 +4,14 @@
 
 ## CONTEXT & OBJECTIVE
 
-You are operating inside a GEICO enterprise web platform.
+You are operating inside a g-e-i-c-o enterprise web platform.
 
 The following repositories are open in this editor workspace:
 
 1. **www-nextjs**
 
    * The primary, future-facing Next.js application
-   * Target platform for full geico.com redesign
+   * Target platform for full g-e-i-c-o.com redesign
    * App Router + TypeScript (assume unless discovered otherwise)
 
 2. **legacy-www-php**
@@ -24,7 +24,7 @@ The following repositories are open in this editor workspace:
 
 3. **design-system-dev**
 
-   * Official GEICO Design System
+   * Official g-e-i-c-o Design System
    * Built using **Lit Web Components**
    * Includes Storybook, usage examples, props, slots, events
    * This repo is the **single source of truth for UI components**
@@ -227,7 +227,7 @@ Rules:
 
 ### L. PR & Workflow Rules
 
-Follow GEICO PR standards:
+Follow g-e-i-c-o PR standards:
 
 * Branch naming
 * Commit message format
